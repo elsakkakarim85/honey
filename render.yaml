@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: apislm-gateway
+    env: docker
+    dockerfilePath: ./ApisLM_Local_Backend/Dockerfile
+    dockerContext: ./ApisLM_Local_Backend
+    plan: free
+    healthCheckPath: /
+    envVars:
+      - key: JWT_SECRET
+        generateValue: true
+      - key: PYTHONUNBUFFERED
+        value: "1"
