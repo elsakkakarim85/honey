@@ -1,0 +1,17 @@
+fastapi
+uvicorn
+qdrant-client
+sentence-transformers
+PyJWT
+passlib[bcrypt]
+python-multipart
+sqlalchemy
+cryptography
+qrcode[pil]
+beautifulsoup4
+requests
+aiosmtplib
+piper-tts
+soundfile
+numpy
+llama-cpp-python

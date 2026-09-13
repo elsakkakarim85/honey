@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  apislm-gateway:
+    build: 
+      context: ./ApisLM_Local_Backend
+      dockerfile: Dockerfile
+    container_name: apislm_api_gateway
+    ports:
+      - "8000:8000"
+    environment:
+      - JWT_SECRET=super-secret-apis-key-123
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - ./ApisLM_Local_Backend/local_erp.db:/app/local_erp.db
+      - ./ApisLM_Local_Backend/rlhf_corrections_log.jsonl:/app/rlhf_corrections_log.jsonl
+    depends_on:
+      - qdrant-vector-db
+
+  qdrant-vector-db:
+    image: qdrant/qdrant:latest
+    container_name: apislm_qdrant
+    ports:
+      - "6333:6333"
+      - "6334:6334"
+    volumes:
+      - ./qdrant_data:/qdrant/storage
+
+  cloud-dashboard:
+    build:
+      context: ./ApisLM_Workspace/cloud-tenant-dashboard
+      dockerfile: Dockerfile
+    container_name: apislm_nextjs_dashboard
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:8000
