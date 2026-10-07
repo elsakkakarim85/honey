@@ -1,0 +1,29 @@
+{
+  "name": "apislm_desktop_app",
+  "version": "1.0.0",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
+  },
+  "build": {
+    "appId": "com.apislm.desktop",
+    "productName": "ApisLM Desktop",
+    "win": {
+      "target": "nsis"
+    },
+    "mac": {
+      "target": "dmg"
+    }
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "concurrently": "^10.0.5",
+    "electron": "^44.6.0",
+    "electron-builder": "^26.15.3"
+  }
+}

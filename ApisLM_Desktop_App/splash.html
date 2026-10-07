@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            background-color: #0f172a;
+            color: white;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            border-radius: 12px;
+            border: 1px solid #334155;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        }
+        h1 {
+            font-size: 36px;
+            color: #f59e0b;
+            margin-bottom: 10px;
+        }
+        .loader {
+            border: 4px solid #334155;
+            border-top: 4px solid #f59e0b;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px 0;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        #status {
+            color: #94a3b8;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <h1>ApisLM</h1>
+    <p style="margin: 0; font-weight: bold; letter-spacing: 2px;">ZERO-COST SWARM PLATFORM</p>
+    <div class="loader"></div>
+    <div id="status">Initializing Ecosystem...</div>
+
+    <script>
+        const statuses = [
+            "Initializing ApisLM GGUF Model...",
+            "Waking up Qdrant Vector Database...",
+            "Starting Local FastAPI Server...",
+            "Booting Next.js Command Center...",
+            "Waiting for services to become healthy..."
+        ];
+        let i = 0;
+        setInterval(() => {
+            if(i < statuses.length) {
+                document.getElementById('status').innerText = statuses[i];
+                i++;
+            }
+        }, 1500);
+    </script>
+</body>
+</html>
