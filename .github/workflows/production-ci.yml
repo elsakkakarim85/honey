@@ -44,8 +44,21 @@ jobs:
         npm ci
         npm run build
 
+  iot-test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Compile ESP32 Firmware
+      uses: arduino/compile-action@v1
+      with:
+        fqbn: esp32:esp32:esp32
+        sketch-paths: ./ApisLM_IoT_Edge
+        libraries: |
+          - name: Adafruit Si7021 Library
+          - name: Adafruit Unified Sensor
+
   docker-build-push:
-    needs: [backend-test, frontend-test]
+    needs: [backend-test, frontend-test, iot-test]
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
     steps:
