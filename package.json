@@ -1,0 +1,33 @@
+{
+  "name": "apislm-monorepo",
+  "version": "2.0.0",
+  "private": true,
+  "workspaces": [
+    "ApisLM_Workspace/cloud-tenant-dashboard",
+    "ApisLM_Mobile_Edge",
+    "ApisLM_Desktop_App"
+  ],
+  "scripts": {
+    "dev:dashboard": "npm run dev --workspace=ApisLM_Workspace/cloud-tenant-dashboard",
+    "dev:mobile": "npm run start --workspace=ApisLM_Mobile_Edge",
+    "dev:desktop": "npm run start --workspace=ApisLM_Desktop_App",
+    "build:all": "npm run build --workspaces --if-present",
+    "test:all": "npm run test --workspaces --if-present",
+    "prepare": "husky install",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
+  },
+  "devDependencies": {
+    "husky": "^8.0.0",
+    "lint-staged": "^13.0.0",
+    "eslint": "^8.0.0"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix"
+    ],
+    "*.py": [
+      "black",
+      "flake8"
+    ]
+  }
+}
