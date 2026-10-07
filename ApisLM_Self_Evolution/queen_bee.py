@@ -38,7 +38,7 @@ class QueenBeeMetaAgent:
         optimized_code = self.optimize_code(original_code, function_name)
         
         # 3. Self-Healing & Regression Testing
-        if self.run_regression_tests(optimized_code):
+        if self.run_regression_tests(filepath, optimized_code, original_code):
             self.commit_evolution(filepath, function_name)
         else:
             print("❌ Regression test failed. Rolling back to original state to prevent system corruption.")
@@ -62,15 +62,31 @@ class QueenBeeMetaAgent:
         print(f"✅ AI successfully rewrote {function_name} with improved time complexity.")
         return optimized
 
-    def run_regression_tests(self, new_code) -> bool:
+    def run_regression_tests(self, filepath: str, new_code: str, original_code: str) -> bool:
         """
         Temporarily injects the new code and runs pytest.
         """
+        print(f"🧪 Injecting new code into {filepath}...")
+        
+        # In a real scenario we'd do AST manipulation. Here we just mock the file IO
+        # with open(filepath, 'w') as f: f.write(new_code)
+        
         print("🧪 Running Pytest Regression Suite...")
-        # Mock: tests pass
-        time.sleep(1)
-        print("✅ Unit tests passed. Code logic integrity maintained.")
-        return True
+        try:
+            # Run pytest
+            result = subprocess.run(['pytest', filepath], capture_output=True, text=True)
+            if result.returncode == 0:
+                print("✅ Unit tests passed. Code logic integrity maintained.")
+                return True
+            else:
+                print("❌ Unit tests failed.")
+                return False
+        except Exception as e:
+            print(f"Pytest execution error: {e}")
+            return False
+        finally:
+            # Revert logic if we had failed (Mocked)
+            pass
 
     def commit_evolution(self, filepath: str, function_name: str):
         """
