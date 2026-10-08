@@ -1,0 +1,26 @@
+{
+  "name": "@apislm/sdk",
+  "version": "1.0.0",
+  "description": "The Official ApisLM TypeScript SDK for interacting with the Edge Node API and DPP Generation",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "jest"
+  },
+  "keywords": [
+    "apislm",
+    "iot",
+    "agriculture",
+    "dpp",
+    "sdk"
+  ],
+  "author": "ApisLM Foundation",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.6.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  }
+}
