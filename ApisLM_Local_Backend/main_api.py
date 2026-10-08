@@ -15,6 +15,14 @@ except ImportError as e:
 
 app = FastAPI(title="ApisLM Zero-Cost API Gateway")
 
+# Register Feature Routers
+try:
+    from apinote_router import router as apinote_router
+    app.include_router(apinote_router)
+    print("✅ ApiNote Router registered successfully.")
+except ImportError as e:
+    print(f"Warning: ApiNote Router unavailable. {e}")
+
 class ChatRequest(BaseModel):
     apiary_id: str
     query: str
