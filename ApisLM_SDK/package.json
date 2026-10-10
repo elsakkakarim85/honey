@@ -6,7 +6,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
-    "test": "jest"
+    "test": "tsc && node --test test/dpp.test.mjs"
   },
   "keywords": [
     "apislm",
@@ -21,6 +21,7 @@
     "axios": "^1.6.0"
   },
   "devDependencies": {
-    "typescript": "^5.0.0"
+    "typescript": "^5.0.0",
+    "@types/node": "^22.0.0"
   }
 }

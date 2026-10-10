@@ -85,8 +85,38 @@ jobs:
           - name: Adafruit Si7021 Library
           - name: Adafruit Unified Sensor
 
+  dashboard-test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
+      with:
+        node-version: "22.x"
+    - name: Typecheck, build, and run API checks (isolated data dir)
+      run: |
+        cd ApisLM_Workspace/cloud-tenant-dashboard
+        npm ci
+        npx tsc --noEmit -p .
+        npm run build
+        APISLM_DATA_DIR=./data-ci npx next start -p 3100 &
+        for i in $(seq 1 30); do curl -sf http://127.0.0.1:3100/login >/dev/null && break; sleep 1; done
+        node scripts/verify-kb.mjs http://127.0.0.1:3100
+
+  sdk-test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
+      with:
+        node-version: "22.x"
+    - name: Build and test SDK
+      run: |
+        cd ApisLM_SDK
+        npm install
+        npm test
+
   docker-build-push:
-    needs: [backend-test, frontend-test, iot-test]
+    needs: [backend-test, frontend-test, iot-test, dashboard-test, sdk-test]
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
     steps:
